@@ -1,0 +1,21 @@
+#### WARNING: This file is maaged by Puppet ####
+<%
+  new_config_options = @config_options.clone
+  if new_config_options.has_key?('sssd')
+-%>
+[sssd]
+<% new_config_options['sssd'].sort.map do |key, value| -%>
+<%= key %>=<%= value %>
+<% end -%>
+
+<%
+  new_config_options.delete('sssd')
+  end
+  new_config_options.sort.map do |section, items|
+-%>
+[<%= section %>]
+<% items.sort.map do |key, value| -%>
+<%= key %>=<%= value %>
+<% end -%>
+
+<% end -%>
